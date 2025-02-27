@@ -1,0 +1,15 @@
+com\mycompany\webapplicationdb\model\Post.class
+com\mycompany\webapplicationdb\model\Account.class
+com\mycompany\webapplicationdb\model\Message.class
+com\mycompany\webapplicationdb\dao\MessageDAO.class
+com\mycompany\webapplicationdb\controller\user\LoginServlet.class
+com\mycompany\webapplicationdb\resources\JavaEE8Resource.class
+com\mycompany\webapplicationdb\dao\PostDAO.class
+com\mycompany\webapplicationdb\dao\AccountDAO.class
+com\mycompany\webapplicationdb\database\DatabaseHandler.class
+com\mycompany\webapplicationdb\controller\user\SignupServlet.class
+com\mycompany\webapplicationdb\util\SessionUtil.class
+com\mycompany\webapplicationdb\dao\FollowDAO.class
+com\mycompany\webapplicationdb\util\ValidationUtil.class
+com\mycompany\webapplicationdb\JAXRSConfiguration.class
+com\mycompany\webapplicationdb\model\Follow.class
