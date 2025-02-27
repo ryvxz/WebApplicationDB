@@ -86,14 +86,14 @@ public class DatabaseHandler
         }
     }
 
-    public static void main(String[] args)
-    {
-        if (testConnection())
-        {
-            System.out.println("Database connection successful!");
-        } else
-        {
-            System.out.println("Database connection failed!");
-        }
-    }
+//    public static void main(String[] args)
+//    {
+//        if (testConnection())
+//        {
+//            System.out.println("Database connection successful!");
+//        } else
+//        {
+//            System.out.println("Database connection failed!");
+//        }
+//    }
 }
