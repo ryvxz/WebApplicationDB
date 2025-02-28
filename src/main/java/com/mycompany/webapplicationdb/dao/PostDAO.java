@@ -1,245 +1,167 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package com.mycompany.webapplicationdb.dao;
 
-import com.mycompany.webapplicationdb.database.DatabaseHandler;
-import com.mycompany.webapplicationdb.model.Post;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Data Access Object for Post entities
- */
-public class PostDAO {
-    
-    /**
-     * Initialize posts record for a new user
-     * 
-     * @param username The username of the new user
-     * @return true if creation was successful, false otherwise
-     */
-    public boolean initializeUserPosts(String username) {
-        String sql = "INSERT INTO posts (user_name) VALUES (?)";
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        
-        try {
-            conn = DatabaseHandler.getConnection();
-            stmt = conn.prepareStatement(sql);
-            stmt.setString(1, username);
-            
-            int rowsAffected = stmt.executeUpdate();
-            return rowsAffected > 0;
-            
-        } catch (SQLException e) {
-            System.err.println("Error initializing user posts: " + e.getMessage());
-            return false;
-        } finally {
-            try {
-                if (stmt != null) stmt.close();
-                DatabaseHandler.closeConnection(conn);
-            } catch (SQLException e) {
-                System.err.println("Error closing resources: " + e.getMessage());
+
+import com.mycompany.webapplicationdb.model.Post;
+import com.mycompany.webapplicationdb.util.DBConnection;
+
+public class PostDAO
+{
+
+    public void createPost(String userName, String content) throws SQLException
+    {
+        Connection conn = DBConnection.getInstance().getConnection();
+
+        // Count existing posts
+        PreparedStatement countSt = conn.prepareStatement(
+                "SELECT COUNT(*) AS post_count FROM posts WHERE user_name = ?");
+        countSt.setString(1, userName);
+        ResultSet countRs = countSt.executeQuery();
+        int postCount = 0;
+        if (countRs.next())
+        {
+            postCount = countRs.getInt("post_count");
+        }
+
+        conn.setAutoCommit(false);
+        try
+        {
+            if (postCount >= 5)
+            {
+                // Delete oldest post
+                PreparedStatement deleteSt = conn.prepareStatement(
+                        "DELETE FROM posts WHERE user_name = ? ORDER BY post_date ASC LIMIT 1");
+                deleteSt.setString(1, userName);
+                deleteSt.executeUpdate();
+
+                // Reorder the remaining posts
+                PreparedStatement reorderSt = conn.prepareStatement(
+                        "SET @order = 0; UPDATE posts SET post_order = (@order:=@order+1) "
+                        + "WHERE user_name = ? ORDER BY post_date ASC");
+                reorderSt.setString(1, userName);
+                reorderSt.executeUpdate();
             }
+
+            // Insert new post
+            PreparedStatement insertSt = conn.prepareStatement(
+                    "INSERT INTO posts(user_name, post_content, post_order) VALUES (?, ?, ?)");
+            insertSt.setString(1, userName);
+            insertSt.setString(2, content);
+            insertSt.setInt(3, Math.min(postCount + 1, 5)); // Ensure we don't exceed 5
+            insertSt.executeUpdate();
+
+            conn.commit();
+        } catch (SQLException e)
+        {
+            conn.rollback();
+            throw e;
+        } finally
+        {
+            conn.setAutoCommit(true);
         }
     }
-    
-    /**
-     * Get posts for a specific user
-     * 
-     * @param username The username to get posts for
-     * @return The Post object containing all posts, null if not found
-     */
-    public Post getUserPosts(String username) {
-        String sql = "SELECT * FROM posts WHERE user_name = ?";
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        
-        try {
-            conn = DatabaseHandler.getConnection();
-            stmt = conn.prepareStatement(sql);
-            stmt.setString(1, username);
-            rs = stmt.executeQuery();
-            
-            if (rs.next()) {
-                Post post = new Post();
-                post.setUserName(rs.getString("user_name"));
-                post.setPost1(rs.getString("post1"));
-                post.setPost2(rs.getString("post2"));
-                post.setPost3(rs.getString("post3"));
-                post.setPost4(rs.getString("post4"));
-                post.setPost5(rs.getString("post5"));
-                return post;
-            }
-            
-        } catch (SQLException e) {
-            System.err.println("Error getting user posts: " + e.getMessage());
-        } finally {
-            try {
-                if (rs != null) rs.close();
-                if (stmt != null) stmt.close();
-                DatabaseHandler.closeConnection(conn);
-            } catch (SQLException e) {
-                System.err.println("Error closing resources: " + e.getMessage());
-            }
+
+    public List<Post> getUserPosts(String userName) throws SQLException
+    {
+        List<Post> posts = new ArrayList<>();
+        Connection conn = DBConnection.getInstance().getConnection();
+        PreparedStatement st = conn.prepareStatement(
+                "SELECT * FROM posts WHERE user_name = ? ORDER BY post_date DESC");
+        st.setString(1, userName);
+        ResultSet rs = st.executeQuery();
+
+        while (rs.next())
+        {
+            Post post = new Post();
+            post.setPostId(rs.getInt("post_id"));
+            post.setUserName(rs.getString("user_name"));
+            post.setPostContent(rs.getString("post_content"));
+            post.setPostDate(rs.getTimestamp("post_date"));
+            post.setPostOrder(rs.getInt("post_order"));
+            posts.add(post);
         }
-        
-        return null; // No posts found
+
+        return posts;
     }
-    
-    /**
-     * Add a new post for a user
-     * 
-     * @param username The username
-     * @param content The post content
-     * @return true if addition was successful, false otherwise
-     */
-    public boolean addPost(String username, String content) {
-        Post userPosts = getUserPosts(username);
-        
-        // If user has no posts record yet, initialize one
-        if (userPosts == null) {
-            if (!initializeUserPosts(username)) {
-                return false;
-            }
-            userPosts = new Post();
-            userPosts.setUserName(username);
+
+    public List<Post> getFollowedUsersPosts(String userName) throws SQLException
+    {
+        List<Post> posts = new ArrayList<>();
+        Connection conn = DBConnection.getInstance().getConnection();
+
+        PreparedStatement st = conn.prepareStatement(
+                "SELECT p.* FROM posts p "
+                + "JOIN follows f ON p.user_name = f.follow1 OR p.user_name = f.follow2 OR p.user_name = f.follow3 "
+                + "WHERE f.user_name = ? "
+                + "ORDER BY p.post_date DESC");
+        st.setString(1, userName);
+        ResultSet rs = st.executeQuery();
+
+        while (rs.next())
+        {
+            Post post = new Post();
+            post.setPostId(rs.getInt("post_id"));
+            post.setUserName(rs.getString("user_name"));
+            post.setPostContent(rs.getString("post_content"));
+            post.setPostDate(rs.getTimestamp("post_date"));
+            post.setPostOrder(rs.getInt("post_order"));
+            posts.add(post);
         }
-        
-        // Add the new post, shifting others
-        userPosts.addNewPost(content);
-        
-        // Update the database
-        String sql = "UPDATE posts SET post1 = ?, post2 = ?, post3 = ?, post4 = ?, post5 = ? WHERE user_name = ?";
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        
-        try {
-            conn = DatabaseHandler.getConnection();
-            stmt = conn.prepareStatement(sql);
-            stmt.setString(1, userPosts.getPost1());
-            stmt.setString(2, userPosts.getPost2());
-            stmt.setString(3, userPosts.getPost3());
-            stmt.setString(4, userPosts.getPost4());
-            stmt.setString(5, userPosts.getPost5());
-            stmt.setString(6, username);
-            
-            int rowsAffected = stmt.executeUpdate();
-            return rowsAffected > 0;
-            
-        } catch (SQLException e) {
-            System.err.println("Error adding post: " + e.getMessage());
-            return false;
-        } finally {
-            try {
-                if (stmt != null) stmt.close();
-                DatabaseHandler.closeConnection(conn);
-            } catch (SQLException e) {
-                System.err.println("Error closing resources: " + e.getMessage());
-            }
-        }
+
+        return posts;
     }
-    
-    /**
-     * Delete a specific post for a user
-     * 
-     * @param username The username
-     * @param postIndex The index of the post (1-5)
-     * @return true if deletion was successful, false otherwise
-     */
-    public boolean deletePost(String username, int postIndex) {
-        if (postIndex < 1 || postIndex > 5) {
-            return false; // Invalid post index
-        }
-        
-        String columnName = "post" + postIndex;
-        String sql = "UPDATE posts SET " + columnName + " = NULL WHERE user_name = ?";
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        
-        try {
-            conn = DatabaseHandler.getConnection();
-            stmt = conn.prepareStatement(sql);
-            stmt.setString(1, username);
-            
-            int rowsAffected = stmt.executeUpdate();
-            return rowsAffected > 0;
-            
-        } catch (SQLException e) {
-            System.err.println("Error deleting post: " + e.getMessage());
-            return false;
-        } finally {
-            try {
-                if (stmt != null) stmt.close();
-                DatabaseHandler.closeConnection(conn);
-            } catch (SQLException e) {
-                System.err.println("Error closing resources: " + e.getMessage());
+
+    public void deletePost(int postId, String userName) throws SQLException
+    {
+        Connection conn = DBConnection.getInstance().getConnection();
+        conn.setAutoCommit(false);
+
+        try
+        {
+            // Check if post belongs to user
+            PreparedStatement checkSt = conn.prepareStatement(
+                    "SELECT * FROM posts WHERE post_id = ? AND user_name = ?");
+            checkSt.setInt(1, postId);
+            checkSt.setString(2, userName);
+            ResultSet rs = checkSt.executeQuery();
+
+            if (!rs.next())
+            {
+                throw new SQLException("Post not found or you don't have permission to delete it.");
             }
-        }
-    }
-    
-    /**
-     * Get posts from users being followed
-     * 
-     * @param follows List of usernames being followed
-     * @return List of posts from followed users
-     */
-    public List<String> getPostsFromFollowedUsers(List<String> follows) {
-        List<String> allPosts = new ArrayList<>();
-        
-        if (follows == null || follows.isEmpty()) {
-            return allPosts; // No follows, return empty list
-        }
-        
-        for (String followedUser : follows) {
-            if (followedUser == null || followedUser.isEmpty()) continue;
-            
-            Post userPosts = getUserPosts(followedUser);
-            if (userPosts != null) {
-                List<String> posts = userPosts.getPostsAsList();
-                for (String post : posts) {
-                    if (post != null && !post.isEmpty()) {
-                        allPosts.add(followedUser + ": " + post);
-                    }
-                }
-            }
-        }
-        
-        return allPosts;
-    }
-    
-    /**
-     * Delete all posts for a user
-     * 
-     * @param username The username
-     * @return true if deletion was successful, false otherwise
-     */
-    public boolean deleteAllPosts(String username) {
-        String sql = "DELETE FROM posts WHERE user_name = ?";
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        
-        try {
-            conn = DatabaseHandler.getConnection();
-            stmt = conn.prepareStatement(sql);
-            stmt.setString(1, username);
-            
-            int rowsAffected = stmt.executeUpdate();
-            return rowsAffected > 0;
-            
-        } catch (SQLException e) {
-            System.err.println("Error deleting all posts: " + e.getMessage());
-            return false;
-        } finally {
-            try {
-                if (stmt != null) stmt.close();
-                DatabaseHandler.closeConnection(conn);
-            } catch (SQLException e) {
-                System.err.println("Error closing resources: " + e.getMessage());
-            }
+
+            // Delete the post
+            PreparedStatement deleteSt = conn.prepareStatement(
+                    "DELETE FROM posts WHERE post_id = ?");
+            deleteSt.setInt(1, postId);
+            deleteSt.executeUpdate();
+
+            // Reorder the remaining posts
+            PreparedStatement reorderSt = conn.prepareStatement(
+                    "SET @order = 0; UPDATE posts SET post_order = (@order:=@order+1) "
+                    + "WHERE user_name = ? ORDER BY post_date ASC");
+            reorderSt.setString(1, userName);
+            reorderSt.executeUpdate();
+
+            conn.commit();
+        } catch (SQLException e)
+        {
+            conn.rollback();
+            throw e;
+        } finally
+        {
+            conn.setAutoCommit(true);
         }
     }
 }
