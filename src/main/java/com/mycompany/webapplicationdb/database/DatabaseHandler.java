@@ -17,7 +17,7 @@ public class DatabaseHandler
     private static final String HOST = "localhost";
     private static final String PORT = "3306";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "1234";
+    private static final String PASSWORD = "password123";
 
     // JDBC URL
     private static final String JDBC_URL = "jdbc:mysql://" + HOST + ":" + PORT + "/"
@@ -86,14 +86,14 @@ public class DatabaseHandler
         }
     }
 
-//    public static void main(String[] args)
-//    {
-//        if (testConnection())
-//        {
-//            System.out.println("Database connection successful!");
-//        } else
-//        {
-//            System.out.println("Database connection failed!");
-//        }
-//    }
+    public static void main(String[] args)
+    {
+        if (testConnection())
+        {
+            System.out.println("Database connection successful!");
+        } else
+        {
+            System.out.println("Database connection failed!");
+        }
+    }
 }

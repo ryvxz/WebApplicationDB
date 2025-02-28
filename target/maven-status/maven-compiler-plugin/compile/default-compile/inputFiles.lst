@@ -1,15 +1,15 @@
-C:\Users\Zephyrus G14\Documents\NetBeansProjects\WebApplicationDB\src\main\java\com\mycompany\webapplicationdb\model\Follow.java
-C:\Users\Zephyrus G14\Documents\NetBeansProjects\WebApplicationDB\src\main\java\com\mycompany\webapplicationdb\model\Account.java
-C:\Users\Zephyrus G14\Documents\NetBeansProjects\WebApplicationDB\src\main\java\com\mycompany\webapplicationdb\controller\user\LoginServlet.java
-C:\Users\Zephyrus G14\Documents\NetBeansProjects\WebApplicationDB\src\main\java\com\mycompany\webapplicationdb\model\Post.java
-C:\Users\Zephyrus G14\Documents\NetBeansProjects\WebApplicationDB\src\main\java\com\mycompany\webapplicationdb\dao\FollowDAO.java
-C:\Users\Zephyrus G14\Documents\NetBeansProjects\WebApplicationDB\src\main\java\com\mycompany\webapplicationdb\model\Message.java
-C:\Users\Zephyrus G14\Documents\NetBeansProjects\WebApplicationDB\src\main\java\com\mycompany\webapplicationdb\JAXRSConfiguration.java
-C:\Users\Zephyrus G14\Documents\NetBeansProjects\WebApplicationDB\src\main\java\com\mycompany\webapplicationdb\resources\JavaEE8Resource.java
-C:\Users\Zephyrus G14\Documents\NetBeansProjects\WebApplicationDB\src\main\java\com\mycompany\webapplicationdb\dao\MessageDAO.java
-C:\Users\Zephyrus G14\Documents\NetBeansProjects\WebApplicationDB\src\main\java\com\mycompany\webapplicationdb\controller\user\SignupServlet.java
-C:\Users\Zephyrus G14\Documents\NetBeansProjects\WebApplicationDB\src\main\java\com\mycompany\webapplicationdb\dao\AccountDAO.java
-C:\Users\Zephyrus G14\Documents\NetBeansProjects\WebApplicationDB\src\main\java\com\mycompany\webapplicationdb\database\DatabaseHandler.java
-C:\Users\Zephyrus G14\Documents\NetBeansProjects\WebApplicationDB\src\main\java\com\mycompany\webapplicationdb\util\ValidationUtil.java
-C:\Users\Zephyrus G14\Documents\NetBeansProjects\WebApplicationDB\src\main\java\com\mycompany\webapplicationdb\dao\PostDAO.java
-C:\Users\Zephyrus G14\Documents\NetBeansProjects\WebApplicationDB\src\main\java\com\mycompany\webapplicationdb\util\SessionUtil.java
+/Users/nigel/NetBeansProjects/WebApplicationDB/src/main/java/com/mycompany/webapplicationdb/dao/AccountDAO.java
+/Users/nigel/NetBeansProjects/WebApplicationDB/src/main/java/com/mycompany/webapplicationdb/database/DatabaseHandler.java
+/Users/nigel/NetBeansProjects/WebApplicationDB/src/main/java/com/mycompany/webapplicationdb/JAXRSConfiguration.java
+/Users/nigel/NetBeansProjects/WebApplicationDB/src/main/java/com/mycompany/webapplicationdb/model/Post.java
+/Users/nigel/NetBeansProjects/WebApplicationDB/src/main/java/com/mycompany/webapplicationdb/util/ValidationUtil.java
+/Users/nigel/NetBeansProjects/WebApplicationDB/src/main/java/com/mycompany/webapplicationdb/dao/PostDAO.java
+/Users/nigel/NetBeansProjects/WebApplicationDB/src/main/java/com/mycompany/webapplicationdb/resources/JavaEE8Resource.java
+/Users/nigel/NetBeansProjects/WebApplicationDB/src/main/java/com/mycompany/webapplicationdb/controller/user/SignupServlet.java
+/Users/nigel/NetBeansProjects/WebApplicationDB/src/main/java/com/mycompany/webapplicationdb/dao/MessageDAO.java
+/Users/nigel/NetBeansProjects/WebApplicationDB/src/main/java/com/mycompany/webapplicationdb/controller/user/LoginServlet.java
+/Users/nigel/NetBeansProjects/WebApplicationDB/src/main/java/com/mycompany/webapplicationdb/dao/FollowDAO.java
+/Users/nigel/NetBeansProjects/WebApplicationDB/src/main/java/com/mycompany/webapplicationdb/model/Message.java
+/Users/nigel/NetBeansProjects/WebApplicationDB/src/main/java/com/mycompany/webapplicationdb/util/SessionUtil.java
+/Users/nigel/NetBeansProjects/WebApplicationDB/src/main/java/com/mycompany/webapplicationdb/model/Follow.java
+/Users/nigel/NetBeansProjects/WebApplicationDB/src/main/java/com/mycompany/webapplicationdb/model/Account.java
