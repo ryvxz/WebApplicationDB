@@ -16,7 +16,12 @@
     
     <div class="container">
         <h2>Your Profile</h2>
-        
+
+        <!-- Display error message if it exists -->
+        <% if (request.getAttribute("errorMessage") != null) { %>
+            <p style="color: red;"><%= request.getAttribute("errorMessage") %></p>
+        <% } %>
+
         <h3>Create a Post</h3>
         <form action="${pageContext.request.contextPath}/ProfileServlet" method="post">
             <textarea name="content" placeholder="Write something..." maxlength="200" required></textarea>

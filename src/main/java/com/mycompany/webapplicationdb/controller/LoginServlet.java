@@ -36,10 +36,16 @@ public class LoginServlet extends HttpServlet
             if ("admin".equals(user.getUserRole()) || "super_admin".equals(user.getUserRole()))
             {
                 response.sendRedirect(request.getContextPath() + "/view/admin.jsp");
-            } else
+            } else 
             {
                 response.sendRedirect(request.getContextPath() + "/LandingServlet");
             }
-        }
+            
+        } else {
+            
+            request.setAttribute("errorMessage", "Invalid username or password.");
+            request.getRequestDispatcher("/view/login.jsp").forward(request, response);
+        }    
     }
+    
 }

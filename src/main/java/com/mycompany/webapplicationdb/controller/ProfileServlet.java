@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/ProfileServlet")
 public class ProfileServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
@@ -24,19 +24,23 @@ public class ProfileServlet extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/view/login.jsp");
             return;
         }
-        
+
         String userName = (String) session.getAttribute("userName");
         PostDAO postDAO = new PostDAO();
+
         try {
+            // Always fetch and display existing posts on page load
             List<Post> posts = postDAO.getUserPosts(userName);
             request.setAttribute("posts", posts);
         } catch (SQLException e) {
+            // Log the error for debugging
+            e.printStackTrace();
             request.setAttribute("errorMessage", "Error retrieving posts.");
         }
-        
+
         request.getRequestDispatcher("/view/profile.jsp").forward(request, response);
     }
-    
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
@@ -45,27 +49,45 @@ public class ProfileServlet extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/view/login.jsp");
             return;
         }
-        
+
         String userName = (String) session.getAttribute("userName");
         String action = request.getParameter("action");
         PostDAO postDAO = new PostDAO();
-        
+
         try {
             if ("create".equals(action)) {
+                // Fetch the current number of posts by the user
+                List<Post> posts = postDAO.getUserPosts(userName);
+                
+                // Apply the post limit only for creation
+                if (posts.size() >= 5) {
+                    request.setAttribute("errorMessage", "You cannot have more than 5 posts. Please delete an old post first.");
+                    request.setAttribute("posts", posts);  // Ensure posts are still displayed
+                    request.getRequestDispatcher("/view/profile.jsp").forward(request, response);
+                    return;
+                }
+
+                // Post content validation
                 String content = request.getParameter("content");
                 if (content == null || content.trim().isEmpty() || content.length() > 200) {
                     request.setAttribute("errorMessage", "Post content must be between 1 and 200 characters.");
+                    request.setAttribute("posts", posts);  // Ensure posts are still displayed
                 } else {
+                    // Create the new post if within the limit
                     postDAO.createPost(userName, content);
                 }
+
             } else if ("delete".equals(action)) {
+                // Allow post deletion without checking the post limit
                 int postId = Integer.parseInt(request.getParameter("postId"));
                 postDAO.deletePost(postId, userName);
             }
         } catch (SQLException | NumberFormatException e) {
+            e.printStackTrace();  // Log the error for debugging
             request.setAttribute("errorMessage", "Error processing post request.");
         }
-        
+
+        // After the action (create or delete), reload and display all posts
         response.sendRedirect(request.getContextPath() + "/ProfileServlet");
     }
 }
