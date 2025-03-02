@@ -8,6 +8,7 @@
 </head>
 <body>
     <div class="navbar">
+        <a href="${pageContext.request.contextPath}/LandingServlet">Home</a>
         <a href="${pageContext.request.contextPath}/view/profile.jsp">Profile</a>
         <a href="${pageContext.request.contextPath}/view/users.jsp">Users</a>
         <a href="${pageContext.request.contextPath}/view/help.jsp">Help</a>
