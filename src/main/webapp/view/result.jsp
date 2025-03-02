@@ -13,7 +13,7 @@
             </a>
         </div>
         <div class="nav-links">
-            <a href="${pageContext.request.contextPath}/view/admin.jsp">Admin Dashboard</a>
+            <a href="${pageContext.request.contextPath}/AdminServlet">Admin Dashboard</a>
             <a href="${pageContext.request.contextPath}/view/create.jsp">Create User</a>
             <a href="${pageContext.request.contextPath}/view/update.jsp">Update User</a>
             <a href="${pageContext.request.contextPath}/view/delete.jsp">Delete User</a>
