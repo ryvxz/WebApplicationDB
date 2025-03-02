@@ -1,5 +1,17 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.util.List, com.mycompany.webapplicationdb.model.Post" %>
+<%
+    if (session.getAttribute("userName") == null) {
+        response.sendRedirect(request.getContextPath() + "/view/login.jsp");
+        return;
+    }
+
+    // Ensure posts are always loaded by redirecting to ProfileServlet if needed
+    if (request.getAttribute("posts") == null) {
+        response.sendRedirect(request.getContextPath() + "/ProfileServlet");
+        return;
+    }
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,8 +27,8 @@
         </div>
         <div class="nav-links">
             <a href="${pageContext.request.contextPath}/LandingServlet">Home</a>
-            <a href="${pageContext.request.contextPath}/view/profile.jsp">Profile</a>
-            <a href="${pageContext.request.contextPath}/view/users.jsp">Users</a>
+            <a href="${pageContext.request.contextPath}/ProfileServlet">Profile</a>
+            <a href="${pageContext.request.contextPath}/UsersServlet">Users</a>
             <a href="${pageContext.request.contextPath}/view/help.jsp">Help</a>
         </div>
         <a href="${pageContext.request.contextPath}/LogoutServlet" class="logout">Logout</a>

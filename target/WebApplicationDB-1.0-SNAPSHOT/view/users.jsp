@@ -9,14 +9,14 @@
 <body>
     <div class="navbar">
         <div class="logo">
-            <a href="${pageContext.request.contextPath}/AdminServlet">
+            <a href="${pageContext.request.contextPath}/LandingServlet">
                 <img src="${pageContext.request.contextPath}/img/logo.png" alt="Logo">
             </a>
         </div>
         <div class="nav-links">
             <a href="${pageContext.request.contextPath}/LandingServlet">Home</a>
-            <a href="${pageContext.request.contextPath}/view/profile.jsp">Profile</a>
-            <a href="${pageContext.request.contextPath}/view/users.jsp">Users</a>
+            <a href="${pageContext.request.contextPath}/ProfileServlet">Profile</a>
+            <a href="${pageContext.request.contextPath}/UsersServlet">Users</a>
             <a href="${pageContext.request.contextPath}/view/help.jsp">Help</a>
         </div>
         <a href="${pageContext.request.contextPath}/LogoutServlet" class="logout">Logout</a>

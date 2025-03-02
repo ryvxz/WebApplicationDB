@@ -15,8 +15,8 @@
         </div>
         <div class="nav-links">
             <a href="${pageContext.request.contextPath}/LandingServlet">Home</a>
-            <a href="${pageContext.request.contextPath}/view/profile.jsp">Profile</a>
-            <a href="${pageContext.request.contextPath}/view/users.jsp">Users</a>
+            <a href="${pageContext.request.contextPath}/ProfileServlet">Profile</a>
+            <a href="${pageContext.request.contextPath}/UsersServlet">Users</a>
             <a href="${pageContext.request.contextPath}/view/help.jsp">Help</a>
         </div>
         <a href="${pageContext.request.contextPath}/LogoutServlet" class="logout">Logout</a>

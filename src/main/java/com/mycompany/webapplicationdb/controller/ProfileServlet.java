@@ -29,12 +29,11 @@ public class ProfileServlet extends HttpServlet {
         PostDAO postDAO = new PostDAO();
 
         try {
-            // Always fetch and display existing posts on page load
+            // Always fetch posts when accessing the page
             List<Post> posts = postDAO.getUserPosts(userName);
             request.setAttribute("posts", posts);
         } catch (SQLException e) {
-            // Log the error for debugging
-            e.printStackTrace();
+            e.printStackTrace(); // Log the error
             request.setAttribute("errorMessage", "Error retrieving posts.");
         }
 
@@ -56,38 +55,29 @@ public class ProfileServlet extends HttpServlet {
 
         try {
             if ("create".equals(action)) {
-                // Fetch the current number of posts by the user
+                // Fetch current number of posts
                 List<Post> posts = postDAO.getUserPosts(userName);
                 
-                // Apply the post limit only for creation
                 if (posts.size() >= 5) {
-                    request.setAttribute("errorMessage", "You cannot have more than 5 posts. Please delete an old post first.");
-                    request.setAttribute("posts", posts);  // Ensure posts are still displayed
-                    request.getRequestDispatcher("/view/profile.jsp").forward(request, response);
-                    return;
-                }
-
-                // Post content validation
-                String content = request.getParameter("content");
-                if (content == null || content.trim().isEmpty() || content.length() > 200) {
-                    request.setAttribute("errorMessage", "Post content must be between 1 and 200 characters.");
-                    request.setAttribute("posts", posts);  // Ensure posts are still displayed
+                    session.setAttribute("errorMessage", "You cannot have more than 5 posts. Delete an old post first.");
                 } else {
-                    // Create the new post if within the limit
-                    postDAO.createPost(userName, content);
+                    String content = request.getParameter("content");
+                    if (content == null || content.trim().isEmpty() || content.length() > 200) {
+                        session.setAttribute("errorMessage", "Post content must be between 1 and 200 characters.");
+                    } else {
+                        postDAO.createPost(userName, content);
+                    }
                 }
-
             } else if ("delete".equals(action)) {
-                // Allow post deletion without checking the post limit
                 int postId = Integer.parseInt(request.getParameter("postId"));
                 postDAO.deletePost(postId, userName);
             }
         } catch (SQLException | NumberFormatException e) {
-            e.printStackTrace();  // Log the error for debugging
-            request.setAttribute("errorMessage", "Error processing post request.");
+            e.printStackTrace();
+            session.setAttribute("errorMessage", "Error processing post request.");
         }
 
-        // After the action (create or delete), reload and display all posts
+        // Redirect to ensure fresh page load with updated posts
         response.sendRedirect(request.getContextPath() + "/ProfileServlet");
     }
 }
