@@ -23,7 +23,8 @@
 
 /* General Layout */
 body {
-    background-color: var(--secondary-color);
+    background: url('../img/bg.png') no-repeat center center fixed;
+    background-size: cover;
     color: var(--neutral-color);
     display: flex;
     flex-direction: column;
@@ -31,14 +32,12 @@ body {
     justify-content: center;
     min-height: 100vh;
 }
-
 /* Container */
 .container {
     max-width: 600px;
     background: var(--tertiary-color);
     padding: 20px;
     border-radius: 12px;
-    box-shadow: 0 4px 10px var(--shadow-color);
     margin-top: 20px;
     text-align: center;
     animation: fadeIn 0.6s ease-in-out;
@@ -82,7 +81,6 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    box-shadow: 0 2px 10px var(--shadow-color);
     backdrop-filter: blur(10px);
 }
 
@@ -187,7 +185,6 @@ a {
 }
 
 a:hover {
-    text-decoration: underline;
     color: var(--hover-color);
 }
 

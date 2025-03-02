@@ -9,7 +9,7 @@
 <body>
     <div class="navbar">
         <div class="logo">
-            <a href="${pageContext.request.contextPath}/LandingServlet">
+            <a href="${pageContext.request.contextPath}/AdminServlet">
                 <img src="${pageContext.request.contextPath}/img/logo.png" alt="Logo">
             </a>
         </div>
@@ -30,8 +30,8 @@
             <input type="text" name="targetUser" placeholder="Enter username" required>
             <input type="hidden" name="action" value="follow">
             <button type="submit">Follow</button>
-        </form>
-        
+        </form> <br>
+            
         <h3>Followed Users</h3>
         <% if (request.getAttribute("followedUsers") != null) { %>
             <% List<User> followedUsers = (List<User>) request.getAttribute("followedUsers"); %>

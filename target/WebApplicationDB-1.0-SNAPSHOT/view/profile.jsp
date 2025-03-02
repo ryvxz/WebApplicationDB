@@ -36,7 +36,7 @@
             <input type="hidden" name="action" value="create">
             <button type="submit">Post</button>
         </form>
-        
+            <br>
         <h3>Your Posts</h3>
         <% if (request.getAttribute("posts") != null) { %>
             <% List<Post> posts = (List<Post>) request.getAttribute("posts"); %>

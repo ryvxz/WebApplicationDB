@@ -7,7 +7,7 @@
 <body>
     <div class="navbar">
         <div class="logo">
-            <a href="${pageContext.request.contextPath}/LandingServlet">
+            <a href="${pageContext.request.contextPath}/AdminServlet">
                 <img src="${pageContext.request.contextPath}/img/logo.png" alt="Logo">
             </a>
         </div>
