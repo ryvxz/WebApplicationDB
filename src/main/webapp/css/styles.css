@@ -74,9 +74,10 @@ body {
 /* Navigation Bar */
 .navbar {
     background: rgba(34, 34, 34, 0.9);
-    padding: 15px;
+    padding: 10px 20px;
     width: 100%;
     display: flex;
+    align-items: center;
     justify-content: space-between;
     position: fixed;
     top: 0;
@@ -85,15 +86,53 @@ body {
     backdrop-filter: blur(10px);
 }
 
-.navbar a {
-    font-size: 16px;
-    padding: 10px;
+/* Logo Styling (Far Left) */
+.navbar .logo {
+    display: flex;
+    align-items: center;
+}
+
+.navbar .logo img {
+    height: 45px; /* Adjust based on logo size */
+    width: auto;
+    transition: transform 0.3s ease-in-out;
+}
+
+.navbar .logo img:hover {
+    transform: scale(1.1);
+}
+
+/* Navigation Links (Aligned Left) */
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Reduce space between links */
+    margin-left: 20px; /* Push links closer to the logo */
+}
+
+.nav-links a {
+    font-size: 15px;
+    padding: 5px 10px;
     color: var(--primary-color);
     text-decoration: none;
     transition: var(--transition-speed);
 }
 
-.navbar a:hover {
+.nav-links a:hover {
+    color: var(--hover-color);
+    border-bottom: 2px solid var(--hover-color);
+}
+
+/* Logout Button (Far Right) */
+.logout {
+    margin-left: auto; /* Push logout to the far right */
+    font-size: 15px;
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: var(--transition-speed);
+}
+
+.logout:hover {
     color: var(--hover-color);
     border-bottom: 2px solid var(--hover-color);
 }
@@ -188,8 +227,12 @@ a:hover {
     }
 
     .navbar {
-        flex-direction: column;
-        align-items: center;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .nav-links {
+        margin-left: 10px;
     }
 
     .navbar a {

@@ -15,15 +15,21 @@
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/styles.css">
     </head>
     <body>
-        <div class="navbar">
-            <a href="${pageContext.request.contextPath}/LandingServlet">Home</a>
+    <div class="navbar">
+        <div class="logo">
+            <a href="${pageContext.request.contextPath}/LandingServlet">
+                <img src="${pageContext.request.contextPath}/img/logo.png" alt="Logo">
+            </a>
+        </div>
+        <div class="nav-links">
+            <a href="${pageContext.request.contextPath}/view/admin.jsp">Admin Dashboard</a>
             <a href="${pageContext.request.contextPath}/view/create.jsp">Create User</a>
             <a href="${pageContext.request.contextPath}/view/update.jsp">Update User</a>
             <a href="${pageContext.request.contextPath}/view/delete.jsp">Delete User</a>
             <a href="${pageContext.request.contextPath}/view/result.jsp">View Results</a>
-
-            <a href="${pageContext.request.contextPath}/LogoutServlet">Logout</a>
         </div>
+        <a href="${pageContext.request.contextPath}/LogoutServlet" class="logout">Logout</a>
+    </div>
 
         <div class="container">
             <h2>Admin Panel</h2>
@@ -31,9 +37,9 @@
             <h3>Manage Users</h3>
             <a href="${pageContext.request.contextPath}/view/create.jsp">Create User</a> |
             <a href="${pageContext.request.contextPath}/view/update.jsp">Update User</a> |
-            <a href="${pageContext.request.contextPath}/view/delete.jsp">Delete User</a>
-
-            <h3>Latest Messages</h3>
+            <a href="${pageContext.request.contextPath}/view/delete.jsp">Delete User</a> 
+            <br><br>
+            <h3>Latest Messages</h3> 
             <% if (request.getAttribute("messages") != null)
             { %>
             <% List<HelpMessage> messages = (List<HelpMessage>) request.getAttribute("messages"); %>
