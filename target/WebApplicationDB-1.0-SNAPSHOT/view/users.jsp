@@ -8,30 +8,29 @@
 </head>
 <body>
     <div class="navbar">
-        <div class="logo">
-            <a href="${pageContext.request.contextPath}/LandingServlet">
-                <img src="${pageContext.request.contextPath}/img/logo.png" alt="Logo">
-            </a>
-        </div>
-        <div class="nav-links">
-            <a href="${pageContext.request.contextPath}/LandingServlet">Home</a>
-            <a href="${pageContext.request.contextPath}/ProfileServlet">Profile</a>
-            <a href="${pageContext.request.contextPath}/UsersServlet">Users</a>
-            <a href="${pageContext.request.contextPath}/view/help.jsp">Help</a>
-        </div>
-        <a href="${pageContext.request.contextPath}/LogoutServlet" class="logout">Logout</a>
+        <a href="${pageContext.request.contextPath}/LandingServlet">Home</a>
+        <a href="${pageContext.request.contextPath}/view/profile.jsp">Profile</a>
+        <a href="${pageContext.request.contextPath}/view/help.jsp">Help</a>
+        <a href="${pageContext.request.contextPath}/LogoutServlet">Logout</a>
     </div>
-    
+
     <div class="container">
         <h2>Follow Users</h2>
-        
+
+        <!-- Show the message (success or error) -->
+        <% if (request.getAttribute("message") != null) { %>
+            <p style="color: green;"><%= request.getAttribute("message") %></p>
+        <% } %>
+
+        <!-- Form to follow a user -->
         <h3>Follow a User</h3>
         <form action="${pageContext.request.contextPath}/UsersServlet" method="post">
             <input type="text" name="targetUser" placeholder="Enter username" required>
             <input type="hidden" name="action" value="follow">
             <button type="submit">Follow</button>
-        </form> <br>
-            
+        </form>
+
+        <!-- List of followed users -->
         <h3>Followed Users</h3>
         <% if (request.getAttribute("followedUsers") != null) { %>
             <% List<User> followedUsers = (List<User>) request.getAttribute("followedUsers"); %>
