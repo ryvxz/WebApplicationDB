@@ -1,22 +1,22 @@
-C:\Users\Clifford Floro\Documents\WebApplicationDB\src\main\java\com\mycompany\webapplicationdb\controller\DeleteUserServlet.java
-C:\Users\Clifford Floro\Documents\WebApplicationDB\src\main\java\com\mycompany\webapplicationdb\JAXRSConfiguration.java
-C:\Users\Clifford Floro\Documents\WebApplicationDB\src\main\java\com\mycompany\webapplicationdb\resources\JavaEE8Resource.java
-C:\Users\Clifford Floro\Documents\WebApplicationDB\src\main\java\com\mycompany\webapplicationdb\controller\LogoutServlet.java
-C:\Users\Clifford Floro\Documents\WebApplicationDB\src\main\java\com\mycompany\webapplicationdb\controller\LandingServlet.java
-C:\Users\Clifford Floro\Documents\WebApplicationDB\src\main\java\com\mycompany\webapplicationdb\controller\UpdateUserServlet.java
-C:\Users\Clifford Floro\Documents\WebApplicationDB\src\main\java\com\mycompany\webapplicationdb\dao\UserDAO.java
-C:\Users\Clifford Floro\Documents\WebApplicationDB\src\main\java\com\mycompany\webapplicationdb\dao\FollowDAO.java
-C:\Users\Clifford Floro\Documents\WebApplicationDB\src\main\java\com\mycompany\webapplicationdb\dao\HelpMessageDAO.java
-C:\Users\Clifford Floro\Documents\WebApplicationDB\src\main\java\com\mycompany\webapplicationdb\dao\PostDAO.java
-C:\Users\Clifford Floro\Documents\WebApplicationDB\src\main\java\com\mycompany\webapplicationdb\model\Post.java
-C:\Users\Clifford Floro\Documents\WebApplicationDB\src\main\java\com\mycompany\webapplicationdb\model\Follow.java
-C:\Users\Clifford Floro\Documents\WebApplicationDB\src\main\java\com\mycompany\webapplicationdb\model\HelpMessage.java
-C:\Users\Clifford Floro\Documents\WebApplicationDB\src\main\java\com\mycompany\webapplicationdb\controller\UsersServlet.java
-C:\Users\Clifford Floro\Documents\WebApplicationDB\src\main\java\com\mycompany\webapplicationdb\model\User.java
-C:\Users\Clifford Floro\Documents\WebApplicationDB\src\main\java\com\mycompany\webapplicationdb\controller\ProfileServlet.java
-C:\Users\Clifford Floro\Documents\WebApplicationDB\src\main\java\com\mycompany\webapplicationdb\controller\LoginServlet.java
-C:\Users\Clifford Floro\Documents\WebApplicationDB\src\main\java\com\mycompany\webapplicationdb\controller\AdminServlet.java
-C:\Users\Clifford Floro\Documents\WebApplicationDB\src\main\java\com\mycompany\webapplicationdb\controller\CreateUserServlet.java
-C:\Users\Clifford Floro\Documents\WebApplicationDB\src\main\java\com\mycompany\webapplicationdb\controller\HelpServlet.java
-C:\Users\Clifford Floro\Documents\WebApplicationDB\src\main\java\com\mycompany\webapplicationdb\controller\SignupServlet.java
-C:\Users\Clifford Floro\Documents\WebApplicationDB\src\main\java\com\mycompany\webapplicationdb\util\DBConnection.java
+/Users/nigel/NetBeansProjects/WebApplicationDB/src/main/java/com/mycompany/webapplicationdb/JAXRSConfiguration.java
+/Users/nigel/NetBeansProjects/WebApplicationDB/src/main/java/com/mycompany/webapplicationdb/controller/SignupServlet.java
+/Users/nigel/NetBeansProjects/WebApplicationDB/src/main/java/com/mycompany/webapplicationdb/controller/LoginServlet.java
+/Users/nigel/NetBeansProjects/WebApplicationDB/src/main/java/com/mycompany/webapplicationdb/controller/LandingServlet.java
+/Users/nigel/NetBeansProjects/WebApplicationDB/src/main/java/com/mycompany/webapplicationdb/model/Post.java
+/Users/nigel/NetBeansProjects/WebApplicationDB/src/main/java/com/mycompany/webapplicationdb/model/User.java
+/Users/nigel/NetBeansProjects/WebApplicationDB/src/main/java/com/mycompany/webapplicationdb/dao/HelpMessageDAO.java
+/Users/nigel/NetBeansProjects/WebApplicationDB/src/main/java/com/mycompany/webapplicationdb/dao/PostDAO.java
+/Users/nigel/NetBeansProjects/WebApplicationDB/src/main/java/com/mycompany/webapplicationdb/resources/JavaEE8Resource.java
+/Users/nigel/NetBeansProjects/WebApplicationDB/src/main/java/com/mycompany/webapplicationdb/controller/ProfileServlet.java
+/Users/nigel/NetBeansProjects/WebApplicationDB/src/main/java/com/mycompany/webapplicationdb/util/DBConnection.java
+/Users/nigel/NetBeansProjects/WebApplicationDB/src/main/java/com/mycompany/webapplicationdb/controller/LogoutServlet.java
+/Users/nigel/NetBeansProjects/WebApplicationDB/src/main/java/com/mycompany/webapplicationdb/controller/AdminServlet.java
+/Users/nigel/NetBeansProjects/WebApplicationDB/src/main/java/com/mycompany/webapplicationdb/model/HelpMessage.java
+/Users/nigel/NetBeansProjects/WebApplicationDB/src/main/java/com/mycompany/webapplicationdb/dao/FollowDAO.java
+/Users/nigel/NetBeansProjects/WebApplicationDB/src/main/java/com/mycompany/webapplicationdb/controller/CreateUserServlet.java
+/Users/nigel/NetBeansProjects/WebApplicationDB/src/main/java/com/mycompany/webapplicationdb/dao/UserDAO.java
+/Users/nigel/NetBeansProjects/WebApplicationDB/src/main/java/com/mycompany/webapplicationdb/controller/DeleteUserServlet.java
+/Users/nigel/NetBeansProjects/WebApplicationDB/src/main/java/com/mycompany/webapplicationdb/model/Follow.java
+/Users/nigel/NetBeansProjects/WebApplicationDB/src/main/java/com/mycompany/webapplicationdb/controller/UsersServlet.java
+/Users/nigel/NetBeansProjects/WebApplicationDB/src/main/java/com/mycompany/webapplicationdb/controller/UpdateUserServlet.java
+/Users/nigel/NetBeansProjects/WebApplicationDB/src/main/java/com/mycompany/webapplicationdb/controller/HelpServlet.java
