@@ -21,17 +21,24 @@
         </div>
         <a href="${pageContext.request.contextPath}/LogoutServlet" class="logout">Logout</a>
     </div>
-    
+
     <div class="container">
         <h2>Follow Users</h2>
-        
+
+        <!-- Show the message (success or error) -->
+        <% if (request.getAttribute("message") != null) { %>
+            <p style="color: green;"><%= request.getAttribute("message") %></p>
+        <% } %>
+
+        <!-- Form to follow a user -->
         <h3>Follow a User</h3>
         <form action="${pageContext.request.contextPath}/UsersServlet" method="post">
             <input type="text" name="targetUser" placeholder="Enter username" required>
             <input type="hidden" name="action" value="follow">
             <button type="submit">Follow</button>
         </form> <br>
-            
+
+        <!-- List of followed users -->
         <h3>Followed Users</h3>
         <% if (request.getAttribute("followedUsers") != null) { %>
             <% List<User> followedUsers = (List<User>) request.getAttribute("followedUsers"); %>

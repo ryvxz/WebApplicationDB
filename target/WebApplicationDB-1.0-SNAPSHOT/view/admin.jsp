@@ -64,7 +64,7 @@
                 <% } else { %>
                     <p>No admins found.</p>
                 <% } %>
-            <% } %>
+                <% } %> <br>
             
             <h3>Latest Messages</h3> 
             <% if (request.getAttribute("messages") != null) { %>
