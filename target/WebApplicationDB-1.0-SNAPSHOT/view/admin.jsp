@@ -2,8 +2,7 @@
 <%@ page import="java.util.List, com.mycompany.webapplicationdb.model.User, com.mycompany.webapplicationdb.model.HelpMessage" %>
 <%
     String role = (String) session.getAttribute("userRole");
-    if (role == null || (!role.equals("admin") && !role.equals("super_admin")))
-    {
+    if (role == null || (!role.equals("admin") && !role.equals("super_admin"))) {
         response.sendRedirect(request.getContextPath() + "/LandingServlet");
         return;
     }
@@ -39,17 +38,41 @@
             <a href="${pageContext.request.contextPath}/view/update.jsp">Update User</a> |
             <a href="${pageContext.request.contextPath}/view/delete.jsp">Delete User</a> 
             <br><br>
+            
+            <h3>All Users</h3>
+            <% List<User> users = (List<User>) request.getAttribute("users"); %>
+            <% if (users != null && !users.isEmpty()) { %>
+                <ul>
+                    <% for (User user : users) { %>
+                        <li><%= user.getUserName() %> - Role: <%= user.getUserRole() %></li>
+                    <% } %>
+                </ul>
+            <% } else { %>
+                <p>No users found.</p>
+            <% } %>
+
+            <%-- SuperAdmin Section --%>
+            <% if ("super_admin".equals(role)) { %>
+                <h3>All Admins</h3>
+                <% List<User> admins = (List<User>) request.getAttribute("admins"); %>
+                <% if (admins != null && !admins.isEmpty()) { %>
+                    <ul>
+                        <% for (User admin : admins) { %>
+                            <li><%= admin.getUserName() %> - Role: <%= admin.getUserRole() %></li>
+                        <% } %>
+                    </ul>
+                <% } else { %>
+                    <p>No admins found.</p>
+                <% } %>
+            <% } %>
+            
             <h3>Latest Messages</h3> 
-            <% if (request.getAttribute("messages") != null)
-            { %>
+            <% if (request.getAttribute("messages") != null) { %>
             <% List<HelpMessage> messages = (List<HelpMessage>) request.getAttribute("messages"); %>
-            <% if (messages.isEmpty())
-                { %>
+            <% if (messages.isEmpty()) { %>
             <p>No new messages.</p>
-            <% } else
-            { %>
-            <% for (HelpMessage msg : messages)
-                    {%>
+            <% } else { %>
+            <% for (HelpMessage msg : messages) { %>
             <div class="message">
                 <p><strong>From: <%= msg.getUserName()%></strong></p>
                 <p><%= msg.getMessage()%></p>
@@ -57,8 +80,7 @@
             </div>
             <% } %>
             <% } %>
-            <% } else
-        { %>
+            <% } else { %>
             <p>No messages available.</p>
             <% }%>
         </div>

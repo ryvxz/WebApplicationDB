@@ -22,20 +22,18 @@ public class DeleteUserServlet extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/view/login.jsp");
             return;
         }
-        
-        String[] selectedUsers = request.getParameterValues("selectedUsers");
-        if (selectedUsers == null || selectedUsers.length == 0) {
-            request.setAttribute("errorMessage", "No users selected for deletion.");
-            request.getRequestDispatcher("/view/delete.jsp").forward(request, response);
+
+        String userName = request.getParameter("username"); // Get username from form input
+        if (userName == null || userName.trim().isEmpty()) {
+            session.setAttribute("message", "Username cannot be empty.");
+            response.sendRedirect(request.getContextPath() + "/view/result.jsp");
             return;
         }
-        
+
         UserDAO userDAO = new UserDAO();
-        
-        for (String userName : selectedUsers) {
-            userDAO.deleteUser(userName);
-        }
-        
-        response.sendRedirect(request.getContextPath() + "/AdminServlet?success=1");
+        String deletionResult = userDAO.deleteUser(userName); // Call delete method
+
+        session.setAttribute("message", deletionResult); // Store result message
+        response.sendRedirect(request.getContextPath() + "/view/result.jsp"); // Redirect to result page
     }
 }

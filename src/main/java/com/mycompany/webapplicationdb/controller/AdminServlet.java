@@ -33,9 +33,11 @@ public class AdminServlet extends HttpServlet {
         
         try {
             List<User> users = userDAO.getAllUsers();
+            List<User> admins = userDAO.getAllAdmins();
             List<HelpMessage> messages = helpDAO.getRecentMessages(5);
             
             request.setAttribute("users", users);
+            request.setAttribute("admins", admins);
             request.setAttribute("messages", messages);
         } catch (SQLException e) {
             request.setAttribute("errorMessage", "Error retrieving admin data.");

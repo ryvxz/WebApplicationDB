@@ -1,4 +1,3 @@
-<!-- result.jsp -->
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -22,10 +21,15 @@
         <a href="${pageContext.request.contextPath}/LogoutServlet" class="logout">Logout</a>
     </div>
     <div class="container">
-
-    <h2>Operation Result</h2>
-        <p>${message}</p>
-        <a href="${pageContext.request.contextPath}/view/admin.jsp">Back to Admin Panel</a>
+        <h2>Operation Result</h2>
+        <% String message = (String) session.getAttribute("message"); %>
+        <% if (message != null) { %>
+            <p><%= message %></p>
+            <% session.removeAttribute("message"); %> 
+        <% } else { %>
+            <p>No operation result available.</p>
+        <% } %>
+        <a href="${pageContext.request.contextPath}/AdminServlet">Back to Admin Panel</a>
     </div>
 </body>
 </html>

@@ -1,4 +1,5 @@
 package com.mycompany.webapplicationdb.dao;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -168,9 +169,8 @@ public class UserDAO
 
     public String updateUser(String userName, String newPassword, String newRole)
     {
-        try
+        try (Connection conn = DBConnection.getInstance().getConnection())
         {
-            Connection conn = DBConnection.getInstance().getConnection();
             StringBuilder sql = new StringBuilder("UPDATE account SET ");
             ArrayList<String> params = new ArrayList<>();
             ArrayList<String> values = new ArrayList<>();
@@ -202,12 +202,17 @@ public class UserDAO
             }
             st.setString(values.size() + 1, userName);
 
+            System.out.println("Executing update for user: " + userName); // Debug log
+            System.out.println("SQL Query: " + sql.toString()); // Check generated SQL
+
             int rowsAffected = st.executeUpdate();
             if (rowsAffected > 0)
             {
+                System.out.println("User updated successfully: " + userName);
                 return "User updated successfully.";
             } else
             {
+                System.out.println("User not found: " + userName);
                 return "User not found.";
             }
         } catch (SQLException e)
@@ -219,19 +224,32 @@ public class UserDAO
 
     public String deleteUser(String userName)
     {
-        try
+        try (Connection conn = DBConnection.getInstance().getConnection())
         {
-            Connection conn = DBConnection.getInstance().getConnection();
+            // Check if user exists before deleting
+            PreparedStatement checkUser = conn.prepareStatement("SELECT * FROM account WHERE user_name = ?");
+            checkUser.setString(1, userName);
+            ResultSet rs = checkUser.executeQuery();
+
+            if (!rs.next())
+            {
+                System.out.println("User not found in database: " + userName);
+                return "User not found.";
+            }
+
+            // Proceed with deletion
             PreparedStatement st = conn.prepareStatement("DELETE FROM account WHERE user_name = ?");
             st.setString(1, userName);
 
             int rowsAffected = st.executeUpdate();
             if (rowsAffected > 0)
             {
+                System.out.println("User deleted successfully: " + userName);
                 return "User deleted successfully.";
             } else
             {
-                return "User not found.";
+                System.out.println("Failed to delete user: " + userName);
+                return "User deletion failed.";
             }
         } catch (SQLException e)
         {

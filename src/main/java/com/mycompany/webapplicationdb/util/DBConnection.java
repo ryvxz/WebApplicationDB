@@ -12,7 +12,7 @@ public class DBConnection {
     private static final String HOST = "localhost";
     private static final String PORT = "3306";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "password123";
+    private static final String PASSWORD = "1234";
 
     // JDBC URL
     private static final String JDBC_URL = "jdbc:mysql://" + HOST + ":" + PORT + "/"
