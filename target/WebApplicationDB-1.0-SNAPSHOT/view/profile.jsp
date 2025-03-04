@@ -5,12 +5,6 @@
         response.sendRedirect(request.getContextPath() + "/view/login.jsp");
         return;
     }
-
-    // Ensure posts are always loaded by redirecting to ProfileServlet if needed
-    if (request.getAttribute("posts") == null) {
-        response.sendRedirect(request.getContextPath() + "/ProfileServlet");
-        return;
-    }
 %>
 <!DOCTYPE html>
 <html>
@@ -33,13 +27,14 @@
         </div>
         <a href="${pageContext.request.contextPath}/LogoutServlet" class="logout">Logout</a>
     </div>
-    
     <div class="container">
         <h2>Your Profile</h2>
 
-        <!-- Display error message if it exists -->
-        <% if (request.getAttribute("errorMessage") != null) { %>
-            <p style="color: red;"><%= request.getAttribute("errorMessage") %></p>
+        <% if (session.getAttribute("errorMessage") != null) { %>
+            <p style="color: red;"><%= session.getAttribute("errorMessage") %></p>
+            <%
+                session.removeAttribute("errorMessage");
+            %>
         <% } %>
 
         <h3>Create a Post</h3>
@@ -47,28 +42,18 @@
             <textarea name="content" placeholder="Write something..." maxlength="200" required></textarea>
             <input type="hidden" name="action" value="create">
             <button type="submit">Post</button>
-        </form>
-            <br>
+        </form> <br>
+
         <h3>Your Posts</h3>
-        <% if (request.getAttribute("posts") != null) { %>
-            <% List<Post> posts = (List<Post>) request.getAttribute("posts"); %>
-            <% if (posts.isEmpty()) { %>
-                <p>No posts yet.</p>
-            <% } else { %>
-                <% for (Post post : posts) { %>
-                    <div class="post">
-                        <p><%= post.getPostContent() %></p>
-                        <p class="timestamp"><%= post.getPostDate() %></p>
-                        <form action="${pageContext.request.contextPath}/ProfileServlet" method="post">
-                            <input type="hidden" name="postId" value="<%= post.getPostId() %>">
-                            <input type="hidden" name="action" value="delete">
-                            <button type="submit">Delete</button>
-                        </form>
-                    </div>
-                <% } %>
-            <% } %>
-        <% } else { %>
-            <p>No posts available.</p>
+        <% for (Post post : (List<Post>) request.getAttribute("posts")) { %>
+            <div class="post">
+                <p><%= post.getPostContent() %></p>
+                <form action="${pageContext.request.contextPath}/ProfileServlet" method="post">
+                    <input type="hidden" name="postId" value="<%= post.getPostId() %>">
+                    <input type="hidden" name="action" value="delete">
+                    <button type="submit">Delete</button>
+                </form>
+            </div>
         <% } %>
     </div>
 </body>

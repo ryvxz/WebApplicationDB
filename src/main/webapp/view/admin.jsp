@@ -25,7 +25,6 @@
             <a href="${pageContext.request.contextPath}/view/create.jsp">Create User</a>
             <a href="${pageContext.request.contextPath}/view/update.jsp">Update User</a>
             <a href="${pageContext.request.contextPath}/view/delete.jsp">Delete User</a>
-            <a href="${pageContext.request.contextPath}/view/result.jsp">View Results</a>
         </div>
         <a href="${pageContext.request.contextPath}/LogoutServlet" class="logout">Logout</a>
     </div>
@@ -64,7 +63,7 @@
                 <% } else { %>
                     <p>No admins found.</p>
                 <% } %>
-            <% } %>
+                <% } %> <br>
             
             <h3>Latest Messages</h3> 
             <% if (request.getAttribute("messages") != null) { %>

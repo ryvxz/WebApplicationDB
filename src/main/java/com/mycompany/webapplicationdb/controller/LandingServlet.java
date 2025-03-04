@@ -29,9 +29,11 @@ public class LandingServlet extends HttpServlet {
         PostDAO postDAO = new PostDAO();
         
         try {
+            // Ensure getFollowedUsersPosts method exists in PostDAO
             List<Post> followedPosts = postDAO.getFollowedUsersPosts(userName);
             request.setAttribute("followedPosts", followedPosts);
         } catch (SQLException e) {
+            e.printStackTrace(); // Log error for debugging
             request.setAttribute("errorMessage", "Error retrieving posts.");
         }
         

@@ -29,11 +29,9 @@ public class ProfileServlet extends HttpServlet {
         PostDAO postDAO = new PostDAO();
 
         try {
-            // Always fetch posts when accessing the page
             List<Post> posts = postDAO.getUserPosts(userName);
             request.setAttribute("posts", posts);
         } catch (SQLException e) {
-            e.printStackTrace(); // Log the error
             request.setAttribute("errorMessage", "Error retrieving posts.");
         }
 
@@ -55,29 +53,22 @@ public class ProfileServlet extends HttpServlet {
 
         try {
             if ("create".equals(action)) {
-                // Fetch current number of posts
-                List<Post> posts = postDAO.getUserPosts(userName);
-                
-                if (posts.size() >= 5) {
-                    session.setAttribute("errorMessage", "You cannot have more than 5 posts. Delete an old post first.");
-                } else {
-                    String content = request.getParameter("content");
-                    if (content == null || content.trim().isEmpty() || content.length() > 200) {
-                        session.setAttribute("errorMessage", "Post content must be between 1 and 200 characters.");
-                    } else {
-                        postDAO.createPost(userName, content);
-                    }
+                String content = request.getParameter("content");
+                boolean success = postDAO.createPost(userName, content);
+                if (!success) {
+                    session.setAttribute("errorMessage", "Failed to create post.");
                 }
             } else if ("delete".equals(action)) {
                 int postId = Integer.parseInt(request.getParameter("postId"));
-                postDAO.deletePost(postId, userName);
+                boolean success = postDAO.deletePost(postId, userName);
+                if (!success) {
+                    session.setAttribute("errorMessage", "Failed to delete post.");
+                }
             }
         } catch (SQLException | NumberFormatException e) {
-            e.printStackTrace();
-            session.setAttribute("errorMessage", "Error processing post request.");
+            session.setAttribute("errorMessage", "Error processing request.");
         }
 
-        // Redirect to ensure fresh page load with updated posts
         response.sendRedirect(request.getContextPath() + "/ProfileServlet");
     }
 }

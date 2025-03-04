@@ -88,4 +88,3 @@ public class UsersServlet extends HttpServlet {
         request.getRequestDispatcher("/view/users.jsp").forward(request, response);
     }
 }
-
